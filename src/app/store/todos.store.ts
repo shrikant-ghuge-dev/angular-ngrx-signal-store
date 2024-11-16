@@ -1,7 +1,7 @@
 import { Todo } from "../model/todo.model"
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { TodosService } from "../service/todos.service";
-import { inject } from "@angular/core";
+import { computed, inject } from "@angular/core";
 
 export type TodosFilter = "all" | "pending" | "completed";
 
@@ -42,7 +42,31 @@ export const TodosStore = signalStore(
                 patchState(store, (currState) => ({
                     todos: currState.todos.filter(todo => todo.id !== id)
                 }))
+            },
+
+            async updateTodo(id:string, completed:boolean) {
+                todosService.updateTodo(id, completed);
+                patchState(store, (currState) => ({
+                    todos: currState.todos.map(todo => todo.id === id ? {...todo, completed} : todo)
+                }))
+            },
+
+            updateFilter(filter: TodosFilter) {
+                patchState(store, {filter})
             }
         })
-    )
+    ),
+    withComputed((currState) => ({
+        filteredTodos: computed(() => {
+            const todos = currState.todos();
+            switch (currState.filter()) {
+                case "all":
+                    return todos;
+                case "pending":
+                    return todos.filter(todo => !todo.completed);
+                case "completed":
+                    return todos.filter(todo => todo.completed);
+            }
+        })
+    }))
 )

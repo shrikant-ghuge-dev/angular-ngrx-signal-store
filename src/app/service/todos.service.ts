@@ -26,6 +26,11 @@ export class TodosService {
 
   async deleteTodo(id:string) {
     await this.sleep(1000);
+
+  }
+
+  async updateTodo(id:string, completed:boolean) {
+    await this.sleep(2000);
     
   }
 
