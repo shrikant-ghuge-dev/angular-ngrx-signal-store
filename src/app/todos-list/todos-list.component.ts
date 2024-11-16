@@ -21,4 +21,9 @@ export class TodosListComponent {
     await this.store.addTodo(title);
   }
 
+  async onDeleteTodo(id:string, event: MouseEvent) {
+    event.stopPropagation();
+    await this.store.deleteTodo(id);
+  }
+
 }
