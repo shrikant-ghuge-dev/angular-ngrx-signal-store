@@ -7,9 +7,9 @@
 </mat-form-field>
 
 <mat-button-toggle-group #filter (change)="onFilterTodos($event)" name="fontStyle" aria-label="Font Style">
-    <mat-button-toggle value="all">All</mat-button-toggle>
-    <mat-button-toggle value="pending">Pending</mat-button-toggle>
-    <mat-button-toggle value="completed">Completed</mat-button-toggle>
+    <mat-button-toggle class="toggle-button" value="all">All</mat-button-toggle>
+    <mat-button-toggle class="toggle-button" value="pending">Pending</mat-button-toggle>
+    <mat-button-toggle class="toggle-button" value="completed">Completed</mat-button-toggle>
 </mat-button-toggle-group>
 
 <mat-selection-list class="todos-list">
